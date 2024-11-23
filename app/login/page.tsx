@@ -33,7 +33,7 @@ const Login: React.FC = () => {
 
         setLoading(true);
         try {
-            const response = await fetch(`/api/login`, {
+            const response = await fetch(`/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,8 +49,13 @@ const Login: React.FC = () => {
                 });
 
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-                router.push("/dashboard");
+                if (data.user.role === 'admin') {
+                    router.push("/admindashboard");
+                } else if (data.user.role === 'user') {
+                    router.push("/userdashboard");
+                } else if (data.user.role === 'superuser') {
+                    router.push("/superuserdashboard");
+                }
             }
         } catch (error) {
             console.error('Login error:', error);
