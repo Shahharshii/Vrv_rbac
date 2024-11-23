@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 // import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import 'react-toastify/dist/ReactToastify.css'
+
 
 interface FormData {
   username: string;
@@ -13,7 +14,7 @@ interface FormData {
 
 const Register: React.FC = () => {
   const router = useRouter();
-  const [formData, setFormData] = React.useState<FormData>({
+  const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
   });
@@ -45,15 +46,17 @@ const Register: React.FC = () => {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok) {
         toast.success('Registration successful!');
-        router.push('/login');
+        setTimeout(() => {
+          router.push('/login');
+        }, 1500);
       } else {
-        toast.error(data.message);
+        toast.error(data.message || 'Registration failed');
       }
-    } catch (err: unknown) {
-      console.error(err);
-      toast.error('Something went wrong!');
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast.error('Something went wrong during registration');
     } finally {
       setLoading(false);
     }
@@ -74,11 +77,11 @@ const Register: React.FC = () => {
           <div className="w-full lg:w-5/12 flex flex-col items-center justify-center bg-emerald-500 text-white p-6 lg:p-12 
               order-1 lg:order-1">
             <div className="max-w-md w-full">
-              <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-center lg:text-left">
-                Welcome Back!
+              <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center lg:text-left">
+                Welcome to Task Tracker!
               </h1>
-              <p className="text-base sm:text-lg mb-8 text-center lg:text-left opacity-90">
-                To keep connected with us please login with your personal info
+              <p className="text-sm sm:text-base mb-8 text-center lg:text-pretty opacity-90">
+                Register now to manage tasks, set priorities, track progress, and collaborate effortlessly. Boost your productivity and achieve your goals with ease!
               </p>
 
             </div>
@@ -140,7 +143,7 @@ const Register: React.FC = () => {
                     disabled={loading}
                     className="w-full flex justify-center py-3 px-4 rounded-full text-white bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 transition-colors duration-300 text-base font-medium"
                   >
-                    {loading ? "Registering..." : "Sign Up"}
+                    {loading ? "Registering..." : "Register"}
                   </button>
                 </div>
               </form>
