@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Header from '@/component/Header';
 
 
 interface User {
@@ -115,24 +116,7 @@ export default function UserDashboard() {
 
     return (
         <div>
-            {/* User Portal Header */}
-            <div className="bg-emerald-500 text-white p-4 shadow-md">
-                <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <div className="text-xl font-semibold">
-                        User Portal
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <span>Hello, User</span>
-                        <button
-                            onClick={() => router.push('/login')}
-                            className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                            Log Out
-                        </button>
-                    </div>
-                </div>
-            </div>
-
+            <Header role="User" />
             {/* Main Content */}
             <div className="py-6">
                 <div className="max-w-6xl mx-auto p-6">

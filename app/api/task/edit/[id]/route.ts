@@ -2,9 +2,9 @@ import connectDB from '@/utiles/db';
 import Task from '@/models/Taskmodel';
 import { NextRequest, NextResponse } from 'next/server';
 import verifyToken from '@/utiles/verifytoken';
-import User from '@/models/Usermodel';
 
-export const DELETE = async (req: NextRequest) => {
+
+export const PUT = async (req: NextRequest, { params }: { params: { id: string[] } }) => {
     try {
         await connectDB();
         const decoded = verifyToken(req);
@@ -20,32 +20,39 @@ export const DELETE = async (req: NextRequest) => {
                 message: 'No permission found'
             }, { status: 403 });
         }
-        if (!permission?.includes('delete_task')) {
+        if (!permission?.includes('edit_task')) {
             return NextResponse.json({
                 success: false,
-                message: 'Not permitted to delete task'
+                message: 'Not permitted to edit task'
             }, { status: 403 });
         }
 
-        const { id } = await req.json();
-        const task = await Task.findById(id);
+        // Get id from URL parameters and updateData from body
+        const task = await Task.findById(params.id);
+        const updateData = await req.json();
+        const id = params.id;
+        // Find and update the task
+
         if (!task) {
             return NextResponse.json({ success: false, message: 'Task not found' }, { status: 404 });
         }
 
-        // Remove task ID from all assigned users
-        if (task.assignedTo && task.assignedTo.length > 0) {
-            await User.updateMany(
-                { _id: { $in: task.assignedTo } },
-                { $pull: { tasks: task._id } }
-            );
-        }
+        const updatedTask = await Task.findByIdAndUpdate(
+            id,
+            { ...updateData },
+            { new: true, runValidators: true }
+        );
 
-        await task.deleteOne();
-        return NextResponse.json({ success: true, message: 'Task deleted successfully' }, { status: 200 });
+        return NextResponse.json({
+            success: true,
+            message: 'Task updated successfully',
+            task: updatedTask
+        });
 
     } catch (error: Error | unknown) {
         const message = error instanceof Error ? error.message : 'Unknown error occurred';
         return NextResponse.json({ success: false, message });
+
     }
 }
+

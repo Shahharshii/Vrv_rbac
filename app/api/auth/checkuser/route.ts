@@ -11,8 +11,6 @@ export const GET = async (req: NextRequest) => {
         const decoded = verifyToken(req);
         if ('id' in decoded) {
             const userId = decoded.id;
-
-            // Query the metrics based on the userId
             const user = await User.findById(userId);
             return NextResponse.json(user, { status: 200 });
         }

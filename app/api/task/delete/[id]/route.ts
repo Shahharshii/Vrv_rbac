@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import verifyToken from '@/utiles/verifytoken';
 import User from '@/models/Usermodel';
 
-export const PUT = async (req: NextRequest) => {
+export const DELETE = async (req: NextRequest, { params }: { params: { id: string[] } }) => {
     try {
         await connectDB();
         const decoded = verifyToken(req);
@@ -27,44 +27,24 @@ export const PUT = async (req: NextRequest) => {
             }, { status: 403 });
         }
 
-        const { id, userId, ...updateData } = await req.json();
-
-        // Find and update the task
-        const task = await Task.findById(id);
+        const task = await Task.findById(params.id);
         if (!task) {
             return NextResponse.json({ success: false, message: 'Task not found' }, { status: 404 });
         }
 
-        const updatedTask = await Task.findByIdAndUpdate(
-            id,
-            { ...updateData },
-            { new: true, runValidators: true }
-        );
+        // Remove task ID from all assigned users
+        if (task.assignedTo && task.assignedTo.length > 0) {
+            await User.updateMany(
+                { _id: { $in: task.assignedTo } },
+                { $pull: { tasks: task._id } }
+            );
+        }
 
-        // Update the task in user's tasks array
-        await User.findByIdAndUpdate(
-            userId,
-            {
-                $set: {
-                    "tasks.$[task]": updatedTask
-                }
-            },
-            {
-                arrayFilters: [{ "task._id": id }],
-                new: true
-            }
-        );
-
-        return NextResponse.json({
-            success: true,
-            message: 'Task updated successfully',
-            task: updatedTask
-        });
+        await task.deleteOne();
+        return NextResponse.json({ success: true, message: 'Task deleted successfully' }, { status: 200 });
 
     } catch (error: Error | unknown) {
         const message = error instanceof Error ? error.message : 'Unknown error occurred';
         return NextResponse.json({ success: false, message });
-
     }
 }
-

@@ -7,7 +7,7 @@ const userSchema = new Schema({
     role: { type: String, required: true, enum: ['admin', 'user', 'superuser'], default: 'user' },
     isActive: { type: Boolean, default: true },
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
-    permission: [{ type: String, enum: ['add_user', 'edit_user', 'delete_user', 'add_task', 'edit_task', 'delete_task', 'complete_task'], default: 'complete_task' }],
+    permission: [{ type: String, enum: ['add_user', 'edit_user', 'delete_user', 'add_task', 'edit_task', 'delete_task', 'edit_permission', 'complete_task'], default: 'complete_task' }],
 });
 
 userSchema.pre('save', function (next) {
