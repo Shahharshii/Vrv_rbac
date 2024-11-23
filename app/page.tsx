@@ -1,101 +1,205 @@
-import Image from "next/image";
+"use client";
+import React from "react";
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
+// import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import 'react-toastify/dist/ReactToastify.css'
 
-export default function Home() {
+interface FormData {
+  username: string;
+  password: string;
+}
+
+const Register: React.FC = () => {
+  const router = useRouter();
+  const [formData, setFormData] = React.useState<FormData>({
+    username: "",
+    password: "",
+  });
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (formData.username.trim().length < 2) {
+      toast.error("Please enter a valid username");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success('Registration successful!');
+        router.push('/login');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err: unknown) {
+      console.error(err);
+      toast.error('Something went wrong!');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 sm:p-6 lg:p-8">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex flex-col lg:flex-row min-h-[550px]">
+          {/* Left side - Welcome message with green background */}
+          <div className="w-full lg:w-5/12 flex flex-col items-center justify-center bg-emerald-500 text-white p-6 lg:p-12 
+              order-1 lg:order-1">
+            <div className="max-w-md w-full">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-center lg:text-left">
+                Welcome Back!
+              </h1>
+              <p className="text-base sm:text-lg mb-8 text-center lg:text-left opacity-90">
+                To keep connected with us please login with your personal info
+              </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            </div>
+          </div>
+
+          {/* Right side - Registration form */}
+          <div className="w-full lg:w-7/12 flex flex-col items-center justify-center p-6 lg:p-12 
+              order-2 lg:order-2">
+            <div className="w-full max-w-md">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center lg:text-left">
+                Create Account
+              </h2>
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                {/* Username Input */}
+                <div className="relative">
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    required
+                    className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
+                    placeholder="Enter your username"
+                    value={formData.username}
+                    onChange={handleChange}
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <FaUser className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+
+                {/* Password Input */}
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    required
+                    className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
+                    placeholder="Create a password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <FaEye className="h-5 w-5 text-gray-400" />
+                    )}
+                  </button>
+                </div>
+
+                <div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full flex justify-center py-3 px-4 rounded-full text-white bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 transition-colors duration-300 text-base font-medium"
+                  >
+                    {loading ? "Registering..." : "Sign Up"}
+                  </button>
+                </div>
+              </form>
+
+              {/* Added "Already have an account?" section below the form */}
+              <div className="mt-6 text-center">
+                <p className="text-gray-600 text-sm">
+                  Already have an account?{" "}
+                  <button
+                    onClick={() => router.push("/login")}
+                    className="text-emerald-500 hover:text-emerald-600 font-medium"
+                  >
+                    Login
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      <ToastContainer />
+    </>
   );
 }
+
+export default Register;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
