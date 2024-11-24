@@ -10,7 +10,7 @@ interface User {
     username: string;
     role: string;
     isActive: boolean;
-    permissions?: string[];
+    permission?: string[];
 }
 
 interface UserTableProps {
@@ -50,7 +50,7 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
 
             if (!response.ok) throw new Error('Failed to fetch users');
             const data = await response.json();
-            console.log(data);
+
             if (data.success) {
                 setUsers(data.users);
             } else {
@@ -66,15 +66,16 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
     const handleDeleteUser = async (userId: string) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
             try {
-                const response = await fetch(`/api/user/deleteuser/${userId}`, {
+                const response = await fetch('/api/user/deleteuser', {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json',
                     },
+                    body: JSON.stringify({ id: userId }),
                 });
                 if (response.ok) {
-                    fetchUsers(); // Refresh the list
+                    fetchUsers();
                 }
             } catch (error) {
                 console.error('Error deleting user:', error);
@@ -139,17 +140,18 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
         if (!editingUser) return;
 
         try {
-            const response = await fetch(`/api/user/edituser/${editingUser._id}`, {
+            const response = await fetch('/api/user/edituser', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    id: editingUser._id,
                     username: editingUser.username,
                     isActive: editingUser.isActive,
                     role: editingUser.role,
-                    permissions: editingUser.permissions
+                    permission: editingUser.permission
                 }),
             });
 
@@ -419,7 +421,7 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                     {role === 'admin' && <option value="admin">Admin</option>}
                                 </select>
                             </div>
-                            {permissions?.includes('edit_permission') && (
+                            {permissions?.includes('edit_permission') && editingUser.role !== 'user' && (
                                 <div className="mb-4">
                                     <label className="block mb-2">Permissions</label>
                                     <div className="space-y-2">
@@ -436,14 +438,14 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                             <div key={perm} className="flex items-center">
                                                 <input
                                                     type="checkbox"
-                                                    checked={editingUser.permissions?.includes(perm)}
+                                                    checked={editingUser.permission?.includes(perm)}
                                                     onChange={(e) => {
                                                         const newPermissions = e.target.checked
-                                                            ? [...(editingUser.permissions || []), perm]
-                                                            : editingUser.permissions?.filter(p => p !== perm) || [];
+                                                            ? [...(editingUser.permission || []), perm]
+                                                            : editingUser.permission?.filter(p => p !== perm) || [];
                                                         setEditingUser({
                                                             ...editingUser,
-                                                            permissions: newPermissions
+                                                            permission: newPermissions
                                                         });
                                                     }}
                                                     className="mr-2"

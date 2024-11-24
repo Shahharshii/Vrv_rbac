@@ -12,7 +12,7 @@ const Header = ({ role }: HeaderProps) => {
         router.push('/login');
     }
     return (
-        <div className="bg-emerald-500 text-white p-6 shadow-md">
+        <div className="bg-emerald-800 text-white p-6 shadow-md">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="text-xl font-bold">
                     {role} Portal
@@ -21,7 +21,7 @@ const Header = ({ role }: HeaderProps) => {
                     <span>Hello, {role}</span>
                     <button
                         onClick={handleLogout}
-                        className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition-colors"
+                        className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md transition-colors"
                     >
                         Log Out
                     </button>

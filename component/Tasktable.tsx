@@ -69,7 +69,7 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
 
             if (!response.ok) throw new Error('Failed to fetch users');
             const data = await response.json();
-            console.log(data);
+
             if (data.success) {
                 setUsers(data.users);
             } else {
@@ -142,12 +142,13 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
     const handleDeleteTask = async (taskId: string) => {
         if (window.confirm('Are you sure you want to delete this task?')) {
             try {
-                const response = await fetch(`/api/task/delete/${taskId}`, {
+                const response = await fetch('/api/task/delete', {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json',
                     },
+                    body: JSON.stringify({ id: taskId }),
                 });
                 if (response.ok) {
                     fetchTasks();
@@ -160,23 +161,23 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
 
     const handleMarkComplete = async (taskId: string) => {
         try {
-            // Find current task status
             const task = tasks.find(t => t._id === taskId);
             const newStatus = task?.status === 'completed' ? 'pending' : 'completed';
 
-            const response = await fetch(`/api/task/edit/${taskId}`, {
+            const response = await fetch('/api/task/edit', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    id: taskId,
                     status: newStatus
                 }),
             });
 
             if (response.ok) {
-                fetchTasks(); // Refresh the task list
+                fetchTasks();
             }
         } catch (error) {
             console.error('Error updating task:', error);
@@ -188,13 +189,16 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
         if (!editingTask) return;
 
         try {
-            const response = await fetch(`/api/task/edit/${editingTask._id}`, {
+            const response = await fetch('/api/task/edit', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(editTaskForm),
+                body: JSON.stringify({
+                    id: editingTask._id,
+                    ...editTaskForm
+                }),
             });
 
             if (response.ok) {

@@ -8,7 +8,6 @@ import Header from '@/component/Header';
 interface User {
     _id: string;
     username: string;
-    role: string;
 }
 
 interface Task {
@@ -16,8 +15,12 @@ interface Task {
     title: string;
     description: string;
     status: 'pending' | 'in_progress' | 'completed';
-    assignedTo: User;
-    dueDate: string;
+    assignedTo: User[];
+}
+
+interface ApiResponse {
+    success: boolean;
+    tasks: Task[];
 }
 
 export default function UserDashboard() {
@@ -28,44 +31,7 @@ export default function UserDashboard() {
 
     useEffect(() => {
         checkUser();
-        setTasks([
-            {
-                _id: '1',
-                title: 'Complete Project Documentation',
-                description: 'Write and review technical documentation for the new feature release',
-                status: 'in_progress',
-                assignedTo: {
-                    _id: 'user1',
-                    username: 'john_doe',
-                    role: 'user'
-                },
-                dueDate: '2024-04-15'
-            },
-            {
-                _id: '2',
-                title: 'Bug Fix: Login Page',
-                description: 'Investigate and fix the authentication issue on the login page',
-                status: 'pending',
-                assignedTo: {
-                    _id: 'user1',
-                    username: 'john_doe',
-                    role: 'user'
-                },
-                dueDate: '2024-04-10'
-            },
-            {
-                _id: '3',
-                title: 'Code Review',
-                description: 'Review pull requests for the payment integration module',
-                status: 'completed',
-                assignedTo: {
-                    _id: 'user1',
-                    username: 'john_doe',
-                    role: 'user'
-                },
-                dueDate: '2024-04-05'
-            }
-        ]);
+        fetchUserTasks();
     }, []);
 
     const checkUser = async () => {
@@ -89,9 +55,11 @@ export default function UserDashboard() {
     }
 
     const fetchUserTasks = async () => {
+        setLoading(true);
         try {
-            const response = await fetch('/api/tasks/user-tasks', {
+            const response = await fetch('/api/task/getalltask', {
                 headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
             });
@@ -100,11 +68,12 @@ export default function UserDashboard() {
                 throw new Error('Failed to fetch tasks');
             }
 
-            const data = await response.json();
-            setTasks(data);
+            const data: ApiResponse = await response.json();
+            setTasks(data.tasks || []);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
             console.error('Error fetching tasks:', err);
+            setTasks([]);
         } finally {
             setLoading(false);
         }
@@ -112,11 +81,13 @@ export default function UserDashboard() {
 
     const markTaskAsComplete = async (taskId: string) => {
         try {
-            const response = await fetch(`/api/tasks/${taskId}/complete`, {
+            const response = await fetch(`/api/task/edit/${taskId}`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({ status: 'completed' })
             });
 
             if (!response.ok) {
@@ -163,13 +134,16 @@ export default function UserDashboard() {
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {tasks.map((task) => (
+                        {Array.isArray(tasks) && tasks.map((task) => (
                             <div
                                 key={task._id}
                                 className="p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition-shadow"
                             >
                                 <h2 className="font-semibold text-lg">{task.title}</h2>
                                 <p className="text-gray-600 mt-2">{task.description}</p>
+                                <p className="text-sm text-gray-500 mt-2">
+                                    Assigned to: {task.assignedTo.map(user => user.username).join(', ')}
+                                </p>
                                 <div className="mt-4 flex justify-between items-center">
                                     <span className={`px-2 py-1 rounded-full text-sm ${task.status === 'completed'
                                         ? 'bg-green-100 text-green-800'

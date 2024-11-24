@@ -12,6 +12,14 @@ interface FormData {
     password: string;
 }
 
+// Add this interface for demo credentials
+interface DemoCredentials {
+    [key: string]: {
+        username: string;
+        password: string;
+    };
+}
+
 const Login: React.FC = () => {
     const router = useRouter();
     const [formData, setFormData] = React.useState<FormData>({
@@ -20,6 +28,30 @@ const Login: React.FC = () => {
     });
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
+
+    // Add demo credentials
+    const demoCredentials: DemoCredentials = {
+        user: {
+            username: "Employee",
+            password: "123456"
+        },
+        admin: {
+            username: "TeamLead",
+            password: "123456"
+        },
+        superuser: {
+            username: "Manager",
+            password: "123456"
+        }
+    };
+
+    // Add handler for dropdown change
+    const handleRoleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const role = e.target.value;
+        if (role in demoCredentials) {
+            setFormData(demoCredentials[role]);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -140,6 +172,24 @@ const Login: React.FC = () => {
                             Login Account
                         </h2>
                         <form className="space-y-5" onSubmit={handleSubmit}>
+                            {/* Add dropdown before username input */}
+                            <motion.div
+                                className="relative"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <select
+                                    onChange={handleRoleSelect}
+                                    className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-base"
+                                >
+                                    <option value="">Select Role to Auto-fill</option>
+                                    <option value="user">User</option>
+                                    <option value="superuser">Superuser</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </motion.div>
+
                             {/* Username Input */}
                             <motion.div
                                 className="relative"

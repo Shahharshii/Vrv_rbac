@@ -33,7 +33,7 @@ const SuperUserDashboard = () => {
         } else if (data.role === 'admin') {
             router.push('/admindashboard');
         } else if (data.role === 'superuser') {
-            setPermissions(data.permissions);
+            setPermissions(data.permission);
         }
     }
 
