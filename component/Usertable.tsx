@@ -423,7 +423,16 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                 <div className="mb-4">
                                     <label className="block mb-2">Permissions</label>
                                     <div className="space-y-2">
-                                        {['add_user', 'edit_user', 'delete_user', 'edit_permission'].map((perm) => (
+                                        {[
+                                            'add_user',
+                                            'edit_user',
+                                            'delete_user',
+                                            'add_task',
+                                            'edit_task',
+                                            'delete_task',
+                                            'edit_permission',
+                                            'complete_task'
+                                        ].map((perm) => (
                                             <div key={perm} className="flex items-center">
                                                 <input
                                                     type="checkbox"

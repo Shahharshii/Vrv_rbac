@@ -28,21 +28,21 @@ export const POST = async (req: NextRequest) => {
         }
 
         const { title, description, assignedTo } = await req.json();
-        const users = await User.find({ username: { $in: assignedTo } });
+        const users = await User.find({ _id: { $in: assignedTo } });
 
         console.log(users)
         if (users.length !== assignedTo.length) {
             return NextResponse.json({
                 success: false,
                 message: 'One or more users not found'
-            }, { status: 404 });
+            }, { status: 401 });
 
         }
 
         const task = new Task({
             title,
             description,
-            assignedTo: users.map(user => user._id)
+            assignedTo
         });
         await task.save();
         users.forEach(user => {

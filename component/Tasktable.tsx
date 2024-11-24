@@ -110,14 +110,16 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/task/create', {
+            const response = await fetch('/api/task/addtask', {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    ...newTask,
-                    assignedTo: selectedUser,
+                    title: newTask.title,
+                    description: newTask.description,
+                    assignedTo: [selectedUser],
                 }),
             });
 
@@ -126,9 +128,14 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
                 setNewTask({ title: '', description: '' });
                 setSelectedUser('');
                 fetchTasks();
+            } else {
+                const errorData = await response.json();
+                console.error('Error adding task:', errorData);
+                alert(errorData.message || 'Failed to add task');
             }
         } catch (error) {
             console.error('Error adding task:', error);
+            alert('Failed to add task');
         }
     };
 
@@ -360,7 +367,10 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
                                 <select
                                     className="w-full px-3 py-2 border rounded"
                                     value={selectedUser}
-                                    onChange={(e) => setSelectedUser(e.target.value)}
+                                    onChange={(e) => {
+                                        console.log('Selected user:', e.target.value);
+                                        setSelectedUser(e.target.value);
+                                    }}
                                     required
                                 >
                                     <option value="">Select User</option>

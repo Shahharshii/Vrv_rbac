@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 // import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import 'react-toastify/dist/ReactToastify.css'
-
+import { motion } from "framer-motion";
 
 interface FormData {
   username: string;
@@ -72,11 +72,36 @@ const Register: React.FC = () => {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 sm:p-6 lg:p-8">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex flex-col lg:flex-row min-h-[550px]">
-          {/* Left side - Welcome message with green background */}
-          <div className="w-full lg:w-5/12 flex flex-col items-center justify-center bg-emerald-500 text-white p-6 lg:p-12 
-              order-1 lg:order-1">
-            <div className="max-w-md w-full">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex flex-col lg:flex-row min-h-[550px] border-2 border-dotted border-emerald-800"
+        >
+          {/* Left side */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              x: 0,
+              y: -20
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              y: 0
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.2
+            }}
+            className="w-full lg:w-5/12 flex flex-col items-center justify-center bg-emerald-900 text-white p-6 lg:p-12 order-1 lg:order-1"
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="max-w-md w-full"
+            >
               <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center lg:text-left">
                 Welcome to Task Tracker!
               </h1>
@@ -84,17 +109,44 @@ const Register: React.FC = () => {
                 Register now to manage tasks, set priorities, track progress, and collaborate effortlessly. Boost your productivity and achieve your goals with ease!
               </p>
 
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Right side - Registration form */}
-          <div className="w-full lg:w-7/12 flex flex-col items-center justify-center p-6 lg:p-12 
-              order-2 lg:order-2">
+          {/* Right side */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+              x: 0
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              x: 0
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.2
+            }}
+            className="w-full lg:w-7/12 flex flex-col items-center justify-center p-6 lg:p-12 order-2 lg:order-2"
+          >
             <div className="w-full max-w-md">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center lg:text-left">
+              <motion.h2
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="text-2xl sm:text-3xl font-bold text-emerald-800 mb-6 text-center lg:text-center"
+              >
                 Create Account
-              </h2>
-              <form className="space-y-5" onSubmit={handleSubmit}>
+              </motion.h2>
+
+              <motion.form
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="space-y-5"
+                onSubmit={handleSubmit}
+              >
                 {/* Username Input */}
                 <div className="relative">
                   <input
@@ -141,28 +193,32 @@ const Register: React.FC = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex justify-center py-3 px-4 rounded-full text-white bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 transition-colors duration-300 text-base font-medium"
+                    className="w-full flex justify-center py-3 px-4 rounded-full text-white bg-emerald-800 hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 transition-colors duration-300 text-base font-medium"
                   >
                     {loading ? "Registering..." : "Register"}
                   </button>
                 </div>
-              </form>
+              </motion.form>
 
-              {/* Added "Already have an account?" section below the form */}
-              <div className="mt-6 text-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                className="mt-6 text-center"
+              >
                 <p className="text-gray-600 text-sm">
                   Already have an account?{" "}
                   <button
                     onClick={() => router.push("/login")}
-                    className="text-emerald-500 hover:text-emerald-600 font-medium"
+                    className="text-emerald-800 hover:text-emerald-900 font-medium"
                   >
                     Login
                   </button>
                 </p>
-              </div>
+              </motion.div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
       <ToastContainer />
     </>
