@@ -23,7 +23,7 @@ interface Task {
 }
 
 
-const Tasktable = ({ permissions, role }: TaskTableProps) => {
+const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
     const [users, setUsers] = useState<User[]>([]);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -44,10 +44,10 @@ const Tasktable = ({ permissions, role }: TaskTableProps) => {
 
 
 
-    const canAddTask = permissions.includes('add_task');
-    const canDeleteTask = permissions.includes('delete_task');
-    const canEditTask = permissions.includes('edit_task');
-    const canCompleteTask = permissions.includes('complete_task');
+    const canAddTask = Array.isArray(permissions) ? permissions.includes('add_task') : false;
+    const canDeleteTask = Array.isArray(permissions) ? permissions.includes('delete_task') : false;
+    const canEditTask = Array.isArray(permissions) ? permissions.includes('edit_task') : false;
+    const canCompleteTask = Array.isArray(permissions) ? permissions.includes('complete_task') : false;
 
     useEffect(() => {
         fetchUsers();

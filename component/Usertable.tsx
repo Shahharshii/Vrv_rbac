@@ -195,7 +195,7 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                     {permissions?.includes('add_user') && (
                                         <button
                                             onClick={() => setShowModal(true)}
-                                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                                            className="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-500"
                                         >
                                             Add User
                                         </button>
