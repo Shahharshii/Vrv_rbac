@@ -139,7 +139,7 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
         if (!editingUser) return;
 
         try {
-            const response = await fetch(`/api/user/updateuser/${editingUser._id}`, {
+            const response = await fetch(`/api/user/edituser/${editingUser._id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,

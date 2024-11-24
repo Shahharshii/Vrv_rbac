@@ -28,6 +28,44 @@ export default function UserDashboard() {
 
     useEffect(() => {
         checkUser();
+        setTasks([
+            {
+                _id: '1',
+                title: 'Complete Project Documentation',
+                description: 'Write and review technical documentation for the new feature release',
+                status: 'in_progress',
+                assignedTo: {
+                    _id: 'user1',
+                    username: 'john_doe',
+                    role: 'user'
+                },
+                dueDate: '2024-04-15'
+            },
+            {
+                _id: '2',
+                title: 'Bug Fix: Login Page',
+                description: 'Investigate and fix the authentication issue on the login page',
+                status: 'pending',
+                assignedTo: {
+                    _id: 'user1',
+                    username: 'john_doe',
+                    role: 'user'
+                },
+                dueDate: '2024-04-10'
+            },
+            {
+                _id: '3',
+                title: 'Code Review',
+                description: 'Review pull requests for the payment integration module',
+                status: 'completed',
+                assignedTo: {
+                    _id: 'user1',
+                    username: 'john_doe',
+                    role: 'user'
+                },
+                dueDate: '2024-04-05'
+            }
+        ]);
     }, []);
 
     const checkUser = async () => {
