@@ -1,6 +1,6 @@
 # Task Tracker with Role Based Access Control
 
-Welcome to the **Oren Sustainability Dashboard**, a comprehensive platform for tracking and improving environmental impact. Oren provides businesses with data-driven insights to foster sustainability and eco-friendly practices.
+Welcome to  **Task Tracker** which manage tasks, set priorities, track progress, and collaborate effortlessly. Boost your productivity and achieve your goals with ease! 
 
 ### Deployed URLs
 
@@ -20,8 +20,7 @@ Welcome to the **Oren Sustainability Dashboard**, a comprehensive platform for t
 
 ## Project Overview
 
-The Oren Sustainability Dashboard is designed to help companies and organizations track and manage their environmental sustainability metrics. The platform provides insights into energy consumption, waste management, carbon footprint, and other environmental impact metrics, giving businesses the tools to make informed decisions for a greener future.
-
+The Role-Based Access Control (RBAC) System for Task Tracking provides an intuitive admin dashboard designed to manage users, roles, and permissions efficiently. This system ensures secure, role-based access, offering flexibility for dynamic permission configurations while enhancing task tracking management.
 ---
 
 ## Features
