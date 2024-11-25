@@ -181,15 +181,15 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                 <div className="p-6 max-w-7xl mx-auto">
                     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                         {/* Header Section */}
-                        <div className="p-6 bg-gray-50 border-b">
-                            <div className="flex justify-between items-center">
-                                <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-                                <div className="flex gap-4">
-                                    <div className="relative">
+                        <div className="p-4 sm:p-6 bg-green-50 border-b">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                                <h1 className="text-xl sm:text-2xl font-bold text-green-800">User Management</h1>
+                                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                                    <div className="relative w-full sm:w-64">
                                         <input
                                             type="text"
                                             placeholder="Search User"
-                                            className="px-4 py-2 border rounded-lg w-64"
+                                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                         />
@@ -197,9 +197,9 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                     {permissions?.includes('add_user') && (
                                         <button
                                             onClick={() => setShowModal(true)}
-                                            className="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-500"
+                                            className="w-full sm:w-auto bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
                                         >
-                                            Add User
+                                            <span>+</span> Add User
                                         </button>
                                     )}
                                 </div>
@@ -207,122 +207,128 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                         </div>
 
                         {/* Table Section */}
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Username
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            User Role
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {currentUsers.map((user) => (
-                                        <tr key={user._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center">
-                                                    <div className="h-10 w-10 flex-shrink-0">
-                                                        <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                                                            <span className="text-sm font-medium text-gray-600">
-                                                                {user.username.charAt(0).toUpperCase()}
+                        <div className="overflow-x-auto w-full">
+                            <div className="inline-block min-w-full align-middle">
+                                <div className="overflow-hidden">
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-slate-100">
+                                            <tr>
+                                                <th className="px-3 py-3 sm:px-6 text-left text-xs font-medium text-green-700 uppercase tracking-wider">
+                                                    Username
+                                                </th>
+                                                <th className="px-3 py-3 sm:px-6 text-left text-xs font-medium text-green-700 uppercase tracking-wider">
+                                                    User Role
+                                                </th>
+                                                <th className="px-3 py-3 sm:px-6 text-left text-xs font-medium text-green-700 uppercase tracking-wider">
+                                                    Status
+                                                </th>
+                                                <th className="px-3 py-3 sm:px-6 text-left text-xs font-medium text-green-700 uppercase tracking-wider">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {currentUsers.map((user) => (
+                                                <tr key={user._id} className="hover:bg-green-50">
+                                                    <td className="px-3 py-3 sm:px-6 whitespace-nowrap">
+                                                        <div className="flex items-center">
+                                                            <div className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
+                                                                <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                                    <span className="text-sm font-medium text-gray-600">
+                                                                        {user.username.charAt(0).toUpperCase()}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="ml-2 sm:ml-4">
+                                                                <div className="text-xs sm:text-sm font-medium text-gray-900">
+                                                                    {user.username}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-3 py-3 sm:px-6 whitespace-nowrap">
+                                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                            ${user.role === 'admin' ? 'bg-yellow-100 text-yellow-800' :
+                                                                user.role === 'superuser' ? 'bg-blue-100 text-blue-800' :
+                                                                    'bg-green-100 text-green-800'}`}>
+                                                            {user.role}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-3 py-3 sm:px-6 whitespace-nowrap">
+                                                        <div className="flex items-center">
+                                                            <div className={`h-2.5 w-2.5 rounded-full mr-2 
+                                                                ${user.isActive ? 'bg-green-500' : 'bg-red-500'}`}>
+                                                            </div>
+                                                            <span className="text-sm text-gray-500">
+                                                                {user.isActive ? 'Active' : 'Inactive'}
                                                             </span>
                                                         </div>
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-medium text-gray-900">
-                                                            {user.username}
+                                                    </td>
+                                                    <td className="px-3 py-3 sm:px-6 whitespace-nowrap text-sm text-gray-500">
+                                                        <div className="flex space-x-3">
+                                                            {permissions?.includes('edit_user') && (
+                                                                <button
+                                                                    onClick={() => handleEditUser(user)}
+                                                                    className="text-blue-600 hover:text-blue-800"
+                                                                >
+                                                                    <FiEdit2 className="w-5 h-5" />
+                                                                </button>
+                                                            )}
+                                                            {user.role !== 'admin' &&
+                                                                !(role === 'superuser' && user.role === 'superuser') &&
+                                                                permissions?.includes('delete_user') && (
+                                                                    <button
+                                                                        onClick={() => handleDeleteUser(user._id)}
+                                                                        className="text-red-600 hover:text-red-900"
+                                                                    >
+                                                                        <FiTrash2 className="w-5 h-5" />
+                                                                    </button>
+                                                                )}
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                    ${user.role === 'admin' ? 'bg-yellow-100 text-yellow-800' :
-                                                        user.role === 'superuser' ? 'bg-blue-100 text-blue-800' :
-                                                            'bg-green-100 text-green-800'}`}>
-                                                    {user.role}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center">
-                                                    <div className={`h-2.5 w-2.5 rounded-full mr-2 
-                                                        ${user.isActive ? 'bg-green-500' : 'bg-red-500'}`}>
-                                                    </div>
-                                                    <span className="text-sm text-gray-500">
-                                                        {user.isActive ? 'Active' : 'Inactive'}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                <div className="flex space-x-3">
-                                                    {permissions?.includes('edit_user') && (
-                                                        <button
-                                                            onClick={() => handleEditUser(user)}
-                                                            className="text-blue-600 hover:text-blue-900"
-                                                        >
-                                                            <FiEdit2 className="w-5 h-5" />
-                                                        </button>
-                                                    )}
-                                                    {user.role !== 'admin' &&
-                                                        !(role === 'superuser' && user.role === 'superuser') &&
-                                                        permissions?.includes('delete_user') && (
-                                                            <button
-                                                                onClick={() => handleDeleteUser(user._id)}
-                                                                className="text-red-600 hover:text-red-900"
-                                                            >
-                                                                <FiTrash2 className="w-5 h-5" />
-                                                            </button>
-                                                        )}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Pagination Section */}
                         <div className="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                            <div className="flex items-center justify-between">
-                                <div className="text-sm text-gray-700">
+                            <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+                                <div className="text-sm text-gray-700 w-full sm:w-auto text-center sm:text-left">
                                     Showing {indexOfFirstUser + 1} to {Math.min(indexOfLastUser, totalUsers)} of {totalUsers} users
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap justify-center gap-2">
                                     <button
                                         onClick={() => setCurrentPage(1)}
                                         disabled={currentPage === 1}
-                                        className="px-3 py-1 rounded border disabled:opacity-50 hover:bg-gray-50"
+                                        className="px-2 sm:px-3 py-1 text-sm rounded border disabled:opacity-50 hover:bg-green-50 text-green-700"
                                     >
                                         First
                                     </button>
                                     <button
                                         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                         disabled={currentPage === 1}
-                                        className="px-3 py-1 rounded border disabled:opacity-50 hover:bg-gray-50"
+                                        className="px-2 sm:px-3 py-1 text-sm rounded border disabled:opacity-50 hover:bg-green-50 text-green-700"
                                     >
                                         Previous
                                     </button>
-                                    <span className="px-3 py-1">Page {currentPage}</span>
+                                    <span className="px-2 sm:px-3 py-1 text-sm">
+                                        Page {currentPage}
+                                    </span>
                                     <button
                                         onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                         disabled={currentPage === totalPages}
-                                        className="px-3 py-1 rounded border disabled:opacity-50 hover:bg-gray-50"
+                                        className="px-2 sm:px-3 py-1 text-sm rounded border disabled:opacity-50 hover:bg-green-50 text-green-700"
                                     >
                                         Next
                                     </button>
                                     <button
                                         onClick={() => setCurrentPage(totalPages)}
                                         disabled={currentPage === totalPages}
-                                        className="px-3 py-1 rounded border disabled:opacity-50 hover:bg-gray-50"
+                                        className="px-2 sm:px-3 py-1 text-sm rounded border disabled:opacity-50 hover:bg-green-50 text-green-700"
                                     >
                                         Last
                                     </button>
@@ -336,7 +342,7 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg w-96">
-                        <h2 className="text-xl font-bold mb-4">Add New User</h2>
+                        <h2 className="text-xl font-bold mb-4 text-green-800">Add New User</h2>
                         <form onSubmit={handleAddUser}>
                             <div className="mb-4">
                                 <label className="block mb-2">Username</label>
@@ -362,13 +368,13 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                 <button
                                     type="button"
                                     onClick={() => setShowModal(false)}
-                                    className="px-4 py-2 border rounded"
+                                    className="px-4 py-2 border rounded hover:bg-gray-50"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500"
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                                 >
                                     Add User
                                 </button>
@@ -380,7 +386,7 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
             {editModal && editingUser && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg w-96">
-                        <h2 className="text-xl font-bold mb-4">Edit User</h2>
+                        <h2 className="text-xl font-bold mb-4 text-blue-800">Edit User</h2>
                         <form onSubmit={handleUpdateUser}>
                             <div className="mb-4">
                                 <label className="block mb-2">Username</label>
@@ -463,13 +469,13 @@ const Usertable = ({ permissions, role }: UserTableProps) => {
                                         setEditModal(false);
                                         setEditingUser(null);
                                     }}
-                                    className="px-4 py-2 border rounded"
+                                    className="px-4 py-2 border rounded hover:bg-gray-50"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-yellow-400 text-white rounded hover:bg-yellow-500"
+                                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                 >
                                     Update User
                                 </button>

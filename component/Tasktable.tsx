@@ -11,7 +11,7 @@ interface TaskTableProps {
 interface User {
     _id: string;
     username: string;
-    role: 'user';
+    role: 'user' | 'admin' | 'superuser';
 }
 
 interface Task {
@@ -228,25 +228,32 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
         )
     );
 
+    const filteredUsers = users.filter(user => {
+        if (role === 'superuser') {
+            return user.role !== 'admin';
+        }
+        return true;
+    });
+
     return (
-        <div>
-            <div className="py-6">
-                <div className="p-6 max-w-7xl mx-auto">
-                    <div className="bg-slate-200 p-6 rounded-t-lg shadow-lg mb-0">
-                        <div className="flex justify-between items-center">
-                            <h1 className="text-2xl font-bold">Task Management</h1>
-                            <div className="flex gap-4">
+        <div className="w-full">
+            <div className="py-4 sm:py-6">
+                <div className="px-4 sm:px-6 max-w-7xl mx-auto">
+                    <div className="bg-green-50 p-4 sm:p-6 rounded-t-lg shadow-lg mb-0">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                            <h1 className="text-xl sm:text-2xl font-bold text-green-800">Task Management</h1>
+                            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                                 <input
                                     type="text"
                                     placeholder="Search tasks or users..."
-                                    className="px-4 py-2 border rounded-lg w-64 text-gray-800"
+                                    className="px-4 py-2 border rounded-lg w-full sm:w-64 text-gray-800 focus:border-green-500 focus:ring-green-500"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {canAddTask && (
                                     <button
                                         onClick={() => setShowAddTaskModal(true)}
-                                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 flex items-center gap-2"
+                                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2 justify-center transition-colors"
                                     >
                                         <FiPlus /> Assign New Task
                                     </button>
@@ -255,88 +262,90 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-b-lg shadow">
-                        {loading ? (
-                            <div className="p-6 text-center">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
-                            </div>
-                        ) : (
-                            <table className="min-w-full">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        {canCompleteTask && (
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Complete</th>
-                                        )}
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned To</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {filteredTasks.length === 0 ? (
+                    <div className="bg-white rounded-b-lg shadow overflow-hidden">
+                        <div className="overflow-x-auto">
+                            {loading ? (
+                                <div className="p-6 text-center">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
+                                </div>
+                            ) : (
+                                <table className="min-w-full table-auto">
+                                    <thead className="bg-slate-100">
                                         <tr>
-                                            <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
-                                                No tasks found
-                                            </td>
+                                            {canCompleteTask && (
+                                                <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Complete</th>
+                                            )}
+                                            <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Task</th>
+                                            <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Assigned To</th>
+                                            <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Status</th>
+                                            <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Actions</th>
                                         </tr>
-                                    ) : (
-                                        filteredTasks.map((task) => (
-                                            <tr key={task._id} className="hover:bg-gray-50">
-                                                {canCompleteTask && (
-                                                    <td className="px-6 py-4">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={task.status === 'completed'}
-                                                            onChange={() => handleMarkComplete(task._id)}
-                                                            className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded cursor-pointer"
-                                                        />
-                                                    </td>
-                                                )}
-                                                <td className="px-6 py-4">
-                                                    <div className="font-medium text-gray-900">{task.title}</div>
-                                                    <div className="text-sm text-gray-500">{task.description}</div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {task.assignedTo.map(user => user.username).join(', ')}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <span className={`px-2 py-1 rounded-full text-xs ${task.status === 'completed'
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : task.status === 'in_progress'
-                                                            ? 'bg-blue-100 text-blue-800'
-                                                            : 'bg-yellow-100 text-yellow-800'
-                                                        }`}>
-                                                        {task.status}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-6 py-4">
-                                                    <div className="flex gap-3">
-                                                        {canEditTask && (
-                                                            <button
-                                                                onClick={() => openEditModal(task)}
-                                                                className="text-blue-600 hover:text-blue-800"
-                                                            >
-                                                                <FiEdit2 className="w-5 h-5" />
-                                                            </button>
-                                                        )}
-                                                        {canDeleteTask && (
-                                                            <button
-                                                                onClick={() => handleDeleteTask(task._id)}
-                                                                className="text-red-600 hover:text-red-800"
-                                                            >
-                                                                <FiTrash2 className="w-5 h-5" />
-                                                            </button>
-                                                        )}
-                                                    </div>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-green-100">
+                                        {filteredTasks.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={5} className="px-3 sm:px-6 py-4 text-center text-gray-500">
+                                                    No tasks found
                                                 </td>
                                             </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        )}
+                                        ) : (
+                                            filteredTasks.map((task) => (
+                                                <tr key={task._id} className="hover:bg-gray-50">
+                                                    {canCompleteTask && (
+                                                        <td className="px-3 sm:px-6 py-4">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={task.status === 'completed'}
+                                                                onChange={() => handleMarkComplete(task._id)}
+                                                                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded cursor-pointer"
+                                                            />
+                                                        </td>
+                                                    )}
+                                                    <td className="px-3 sm:px-6 py-4">
+                                                        <div className="font-medium text-gray-900 break-words">{task.title}</div>
+                                                        <div className="text-sm text-gray-500 break-words">{task.description}</div>
+                                                    </td>
+                                                    <td className="px-3 sm:px-6 py-4 break-words">
+                                                        {task.assignedTo.map(user => user.username).join(', ')}
+                                                    </td>
+                                                    <td className="px-3 sm:px-6 py-4">
+                                                        <span className={`px-2 py-1 rounded-full text-xs ${task.status === 'completed'
+                                                            ? 'bg-green-100 text-green-800'
+                                                            : task.status === 'in_progress'
+                                                                ? 'bg-green-50 text-green-700'
+                                                                : 'bg-yellow-50 text-yellow-700'
+                                                            }`}>
+                                                            {task.status}
+                                                        </span>
+                                                    </td>
+
+                                                    <td className="px-3 sm:px-6 py-4">
+                                                        <div className="flex gap-3">
+                                                            {canEditTask && (
+                                                                <button
+                                                                    onClick={() => openEditModal(task)}
+                                                                    className="text-blue-600 hover:text-blue-800"
+                                                                >
+                                                                    <FiEdit2 className="w-5 h-5" />
+                                                                </button>
+                                                            )}
+                                                            {canDeleteTask && (
+                                                                <button
+                                                                    onClick={() => handleDeleteTask(task._id)}
+                                                                    className="text-red-600 hover:text-red-800"
+                                                                >
+                                                                    <FiTrash2 className="w-5 h-5" />
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -345,7 +354,7 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
             {showAddTaskModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg w-96">
-                        <h2 className="text-xl font-bold mb-4">Assign New Task</h2>
+                        <h2 className="text-xl font-bold mb-4 text-green-800">Assign New Task</h2>
                         <form onSubmit={handleAddTask}>
                             <div className="mb-4">
                                 <label className="block text-sm font-medium mb-1">Title</label>
@@ -378,7 +387,7 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
                                     required
                                 >
                                     <option value="">Select User</option>
-                                    {users.map((user) => (
+                                    {filteredUsers.map((user) => (
                                         <option key={user._id} value={user._id}>
                                             {user.username}
                                         </option>
@@ -389,13 +398,13 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
                                 <button
                                     type="button"
                                     onClick={() => setShowAddTaskModal(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="px-4 py-2 text-green-600 hover:text-green-800"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                                 >
                                     Assign Task
                                 </button>
@@ -409,7 +418,7 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
             {showEditTaskModal && editingTask && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg w-96">
-                        <h2 className="text-xl font-bold mb-4">Edit Task</h2>
+                        <h2 className="text-xl font-bold mb-4 text-green-800">Edit Task</h2>
                         <form onSubmit={handleEditTask}>
                             <div className="mb-4">
                                 <label className="block text-sm font-medium mb-1">Title</label>
@@ -454,13 +463,13 @@ const Tasktable = ({ permissions = [], role }: TaskTableProps) => {
                                 <button
                                     type="button"
                                     onClick={() => setShowEditTaskModal(false)}
-                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    className="px-4 py-2 text-green-600 hover:text-green-800"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                                 >
                                     Update Task
                                 </button>
