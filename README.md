@@ -117,9 +117,9 @@ To ensure the platform is ready for use after setup, a pre-populate the database
   - **Username:** `SuperUser`,
   - **Password:** `123456`
 
- - **User Credentials:**
-  - **Username:** `User`,
-  - **Password:** `123456`
+- **User Credentials:**
+   - **Username:** `User`,
+   - **Password:** `123456`
     
 
 - **Usage:**
