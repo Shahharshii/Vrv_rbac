@@ -25,25 +25,16 @@ The Role-Based Access Control (RBAC) System for Task Tracking provides an intuit
 ## Features
 
 1. **Register System**:
-   - Secure Register system for authorized users using username and password.
+   - Secure Register system for authorized users using Username and password.
+   - Token based verification and session management
  
 
-1. **Login System**:
-   - Secure login system for authorized users using email and password.
-   - Session-based authentication for enhanced security and user session management.
-   - User session management using cookies, ensuring a smoother user experience.
-     
-
-2. **Dashboard Overview**:
-   - A dynamic dashboard presenting key sustainability metrics such as energy consumption, waste management, and carbon emissions.
-   - Data visualization using graphs and charts for better insights.
+2. **Login System**:
+   - Secure login system for authorized users using Username and password.
+   - Token based verification and session management.
 
 3. **User Role**:
-   - Only authorized users (Admins) can access the platform.
-
-4. **Data Insights & Reports**:
-   - Generate JSON data to track progress over time and compare performance.
-   - Downloadable reports in JSON format for external review.
+   - The authorized Admin, SuperUser and user can access the platform.
 
 5. **Responsive Design**:
    - Fully responsive design, optimized for both mobile and desktop screens.
