@@ -74,23 +74,22 @@ The same task on the adminDashboard will be reflected along with its status i.e 
 ![image](https://github.com/user-attachments/assets/0474347c-9a9d-4101-9ed8-2abeca835bb9)
 
 ### 4. **SuperUser Portal**
-In the SuperUser portal, the Superuser is able to assign task, edit task, delete task and can mark the task as completed.
-SuperUser has access to manage the Superuser and User.
-SuperUser has access to manage the task of the user and other SuperUser.
+-In the SuperUser portal, the Superuser is able to assign task, edit task, delete task and can mark the task as completed.
+-SuperUser has access to manage the Superuser and User.
+-SuperUser has access to manage the task of the user and other SuperUser.
 
 ![image](https://github.com/user-attachments/assets/6f33e5e4-224f-4994-8904-76ad70928b22)
 ![image](https://github.com/user-attachments/assets/27202f32-9b0f-416f-81ba-bdec643e432b)
 
 ### 5. **Admin Portal**
-In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task.
-Admin has access to manage all the Admin along with SuperUser and User.
+-In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task.
+-Admin has access to manage all the Admin along with SuperUser and User.
 
 ![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
 ![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
 
-### 5. **Admin Portal**
-In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task.
-Admin has access to manage all the Admin along with SuperUser and User.
+### 5. **Add User**
+
 
 ![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
 ![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
