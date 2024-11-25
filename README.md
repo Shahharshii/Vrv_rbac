@@ -4,7 +4,7 @@ Welcome to  **Task Tracker** which manage tasks, set priorities, track progress,
 
 ### Deployed URLs
 
-- **URL**: [https://sustainanility-dashboard.onrender.com](https://sustainanility-dashboard.onrender.com)
+- **URL**: 
 
 ---
 
@@ -68,31 +68,29 @@ The Login can be performed using 3 roles :-
 
 
 ### 3. **User Portal**
-In the user portal, the user is able to see the assign task and can mark the task completed when finished.
-The same task on the adminDashboard will be reflected along with its status i.e pending or completed.
+In the user portal, the user is able to see the assign task and can mark the task completed when finished. The same task on the adminDashboard will be reflected along with its status i.e pending or completed.
 
 ![image](https://github.com/user-attachments/assets/0474347c-9a9d-4101-9ed8-2abeca835bb9)
 
 ### 4. **SuperUser Portal**
--In the SuperUser portal, the Superuser is able to assign task, edit task, delete task and can mark the task as completed.
--SuperUser has access to manage the Superuser and User.
--SuperUser has access to manage the task of the user and other SuperUser.
+In the SuperUser portal, the Superuser is able to assign task, edit task, delete task and can mark the task as completed. SuperUser has access to manage the Superuser and User. SuperUser has access to manage the task of the user and other SuperUser.
 
 ![image](https://github.com/user-attachments/assets/6f33e5e4-224f-4994-8904-76ad70928b22)
 ![image](https://github.com/user-attachments/assets/27202f32-9b0f-416f-81ba-bdec643e432b)
 
 ### 5. **Admin Portal**
--In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task.
--Admin has access to manage all the Admin along with SuperUser and User.
+In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task. Admin has access to manage all the Admin along with SuperUser and User.
 
 ![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
 ![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
 
-### 5. **Add User**
+### 6. **Add User**
+The role (Admin) having the add_user can add the User from the Admin portal.
+![image](https://github.com/user-attachments/assets/023784c9-50a3-4030-8e2d-50a2cc6bf2c9)
 
-
-![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
-![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
+### 7. **Edit User**
+The role (Admin) having the edit_user can add the User from the Admin portal.
+![image](https://github.com/user-attachments/assets/91b52239-bd7d-4df7-80d0-f69f180ea891)
 
 
 
