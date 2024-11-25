@@ -21,14 +21,18 @@ Welcome to  **Task Tracker** which manage tasks, set priorities, track progress,
 ## Project Overview
 
 The Role-Based Access Control (RBAC) System for Task Tracking provides an intuitive admin dashboard designed to manage users, roles, and permissions efficiently. This system ensures secure, role-based access, offering flexibility for dynamic permission configurations while enhancing task tracking management.
----
 
 ## Features
+
+1. **Register System**:
+   - Secure Register system for authorized users using username and password.
+ 
 
 1. **Login System**:
    - Secure login system for authorized users using email and password.
    - Session-based authentication for enhanced security and user session management.
    - User session management using cookies, ensuring a smoother user experience.
+     
 
 2. **Dashboard Overview**:
    - A dynamic dashboard presenting key sustainability metrics such as energy consumption, waste management, and carbon emissions.
@@ -97,10 +101,10 @@ The **Export JSON** feature allows users to download the entire sustainability p
 
 ### Pre-entered Admin Data
 
-To ensure the platform is ready for use after setup, a pre-populate the database with an initial admin account. This allows for immediate access to the dashboard after the first-time deployment without manually entering credentials.
+To ensure the platform is ready for use after setup, a pre-populate the database with an initial Admin, Superuser and User account. This allows for immediate access to the selected portal after the first-time deployment without manually entering credentials.
 
 - **Admin Credentials:**
-  - **Email:** `admin1@gmail.com`,`admin2@gmail.com`,`admin3@gmail.com`,`admin4@gmail.com`,`admin5@gmail.com`
+  - **Email:** `admin1@gmail.com`,
   - **Password:** `password123`  (`Same For all`)
 
 
