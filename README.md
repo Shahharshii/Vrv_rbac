@@ -53,37 +53,41 @@ The Role-Based Access Control (RBAC) System for Task Tracking provides an intuit
 
 ## Screenshots
 
-### 1. **Login Page**
-The user can log in using their email and password to access the dashboard.
-![image](https://github.com/user-attachments/assets/876d7276-e2ad-445a-a191-33b88baeee1c)
+### 1. **Registration Page**
+The user can Register using their username and password .
+![image](https://github.com/user-attachments/assets/feabcaf6-98fb-4f85-be2d-bf6eef5bfbc4)
 
 
-### 2. **Dashboard Overview**
-Displays key metrics and data visualizations related to sustainability projects.
-![image](https://github.com/user-attachments/assets/fcc18cbf-161e-472b-a1a3-8570cb36a46f)
+### 2. **Login Page**
+The user can log in using their Username and password to access the defined portal.
+The Login can be performed using 3 roles :- 
+1) Admin (TeamLead)
+2) SuperUser(Manager)
+3) User (Employee)
+![image](https://github.com/user-attachments/assets/0aa59446-2354-4e06-af23-a1df12db52e6)
 
 
-Same in mobile screen will be:
-![image](https://github.com/user-attachments/assets/994921f3-bcfb-4ff4-83ab-62d9ac81240e)
+### 3. **User Portal**
+In the user portal, the user is able to see the assign task and can mark the task completed when finished.
+The same task on the adminDashboard will be reflected along with its status i.e pending or completed.
 
+![image](https://github.com/user-attachments/assets/0474347c-9a9d-4101-9ed8-2abeca835bb9)
 
-### 3. **Metrics Adding and Comparing with Companies Benchmark**
-Users can manage and track various sustainability projects and can compare with the Company Benchmarks.
-![image](https://github.com/user-attachments/assets/0d99ec14-1c4c-4be9-920b-b53c0ab69f4c)
+### 4. **SuperUser Portal**
+In the SuperUser portal, the Superuser is able to assign task, edit task, delete task and can mark the task as completed.
+SuperUser has access to manage the Superuser and User.
+SuperUser has access to manage the task of the user and other SuperUser.
 
+![image](https://github.com/user-attachments/assets/6f33e5e4-224f-4994-8904-76ad70928b22)
+![image](https://github.com/user-attachments/assets/27202f32-9b0f-416f-81ba-bdec643e432b)
 
-### 4. **Export JSON Functionality**
+### 5. **Admin Portal**
+In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task.
+Admin has access to manage all the Admin along with SuperUser and User.
 
-The **Export JSON** feature allows users to download the entire sustainability project data in a structured JSON format. This can be useful for reporting, data analysis, or backups. 
+![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
+![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
 
-- **How It Works:**
-  - The system compiles all relevant project information, including metrics, progress updates, and project details.
-  - Users can simply click the **Download JSON** button, and a `.json` file will be generated and downloaded automatically.
-  
-- **Usage:**
-  This feature is accessible from the dashboard, making it easy for users to extract data at any point in time for external analysis or sharing.
-
-![image](https://github.com/user-attachments/assets/c48bbfe9-67d7-45ae-90f9-16e283748a52)
 
 
 ## Access Ways
