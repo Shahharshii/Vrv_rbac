@@ -26,8 +26,7 @@ The Role-Based Access Control (RBAC) System for Task Tracking provides an intuit
 
 1. **Register System**:
    - Secure Register system for authorized users using Username and password.
-   - Token based verification and session management
- 
+   - Token based verification and session management 
 
 2. **Login System**:
    - Secure login system for authorized users using Username and password.
@@ -35,6 +34,16 @@ The Role-Based Access Control (RBAC) System for Task Tracking provides an intuit
 
 3. **User Role**:
    - The authorized Admin, SuperUser and user can access the platform.
+
+4. **Custom API Simulation**
+   - Mock API Calls for CRUD Operations:
+   - All user and role management functionalities are backed by simulated API calls for:
+        1) Creating users and roles.
+        2) Fetching lists of users and roles.
+        3) Updating and deleting records.
+
+5. **Search Functionality**:
+   - A unified search bar allows administrators to quickly locate users, roles, or permissions across the system.
 
 5. **Responsive Design**:
    - Fully responsive design, optimized for both mobile and desktop screens.
@@ -108,7 +117,7 @@ To ensure the platform is ready for use after setup, a pre-populate the database
   - **Username:** `SuperUser`,
   - **Password:** `123456`
 
-   - **User Credentials:**
+ - **User Credentials:**
   - **Username:** `User`,
   - **Password:** `123456`
     
