@@ -88,6 +88,13 @@ Admin has access to manage all the Admin along with SuperUser and User.
 ![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
 ![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
 
+### 5. **Admin Portal**
+In the Admin portal, the Admin has permission to all the permission such as add_user, edit_user, delete_user, add_task, edit_task, delete_task, edit_permission, complete_task.
+Admin has access to manage all the Admin along with SuperUser and User.
+
+![image](https://github.com/user-attachments/assets/6c950ceb-378c-4ea6-a811-1b87a0bdce8d)
+![image](https://github.com/user-attachments/assets/3d9acca5-cba0-4312-b279-598d8797b3be)
+
 
 
 ## Access Ways
