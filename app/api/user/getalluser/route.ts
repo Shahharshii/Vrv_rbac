@@ -22,7 +22,7 @@ export const GET = async (req: NextRequest) => {
 
         if (user.role === 'admin' || user.role === 'superuser') {
             // Get all users with their tasks populated
-            const allUsers = await User.find({}).populate('tasks');
+            const allUsers = await User.find({});
             return NextResponse.json({ success: true, users: allUsers });
         } else {
             // Regular users are not permitted to view all users
