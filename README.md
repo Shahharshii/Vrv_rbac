@@ -104,15 +104,20 @@ The **Export JSON** feature allows users to download the entire sustainability p
 To ensure the platform is ready for use after setup, a pre-populate the database with an initial Admin, Superuser and User account. This allows for immediate access to the selected portal after the first-time deployment without manually entering credentials.
 
 - **Admin Credentials:**
-  - **Email:** `admin1@gmail.com`,
-  - **Password:** `password123`  (`Same For all`)
+  - **Username:** `Admin`,
+  - **Password:** `123456`
+    
+- **SuperUser Credentials:**
+  - **Username:** `SuperUser`,
+  - **Password:** `123456`
 
+   - **User Credentials:**
+  - **Username:** `User`,
+  - **Password:** `123456`
+    
 
 - **Usage:**
-  - After setting up the project, log in with the pre-entered admin credentials to access the full features of the dashboard, including the ability to export JSON data.
+  - After setting up the project, log in with the pre-entered credentials to access the full features of the defined portal, including the role and permission based accces for create_user, delete_user, edit_user, add_task, delete_task, edit_task.
   
-- **Security:**
-  - It is strongly recommended to change the admin password upon the first login to ensure security.
-
 
 
