@@ -53,12 +53,10 @@ The Role-Based Access Control (RBAC) System for Task Tracking provides an intuit
 
 ## Technologies Used
 
-- **Frontend**: React.js, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Express.js
-- **Database**: PostgreSQL (via Supabase)
-- **Authentication**: Session-based authentication
-- **Charts**: Chart.js or any other data visualization library
-- **Deployment**: Render (Backend) | Netlify (Frontend)
+- **Frontend/Backend**: Next.js, TypeScript, Tailwind CSS
+- **Database**: MongoDB
+- **Authentication**: token-based authentication
+- **Deployment**: vercel
 
 ---
 
