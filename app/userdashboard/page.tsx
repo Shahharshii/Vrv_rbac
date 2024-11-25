@@ -81,13 +81,16 @@ export default function UserDashboard() {
 
     const markTaskAsComplete = async (taskId: string) => {
         try {
-            const response = await fetch(`/api/task/edit/${taskId}`, {
+            const response = await fetch('/api/task/edit', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ status: 'completed' })
+                body: JSON.stringify({
+                    id: taskId,
+                    status: 'completed'
+                })
             });
 
             if (!response.ok) {
